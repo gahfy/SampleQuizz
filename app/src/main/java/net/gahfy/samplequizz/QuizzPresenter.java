@@ -1,5 +1,7 @@
 package net.gahfy.samplequizz;
 
+import android.util.Log;
+
 import java.util.List;
 import java.util.Random;
 
@@ -59,6 +61,7 @@ public class QuizzPresenter {
     }
 
     void onAnswerSelected(String answer){
+        Log.d(QuizzPresenter.class.getSimpleName(), "User selected answer: ".concat(answer));
         getView().showMessage(getQuestion().goodAnswer(answer));
     }
 }
