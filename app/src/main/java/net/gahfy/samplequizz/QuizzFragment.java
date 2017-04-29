@@ -17,6 +17,7 @@ public class QuizzFragment extends Fragment implements QuizzView{
     RadioButton mRadioAnswer2;
     RadioButton mRadioAnswer3;
     RadioButton mRadioAnswer4;
+    QuizzPresenter mQuizzPresenter;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quizz, container, false);
@@ -27,20 +28,28 @@ public class QuizzFragment extends Fragment implements QuizzView{
         mRadioAnswer3 = (RadioButton) view.findViewById(R.id.radio_answer_3);
         mRadioAnswer4 = (RadioButton) view.findViewById(R.id.radio_answer_4);
 
-        final QuizzPresenter quizzPresenter = new QuizzPresenter(this);
+        init();
 
+        return view;
+    }
+
+    public void init(){
+        mQuizzPresenter = new QuizzPresenter(this);
         CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
-                    quizzPresenter.onAnswerSelected((String) buttonView.getTag());
+                    getQuizzPresenter().onAnswerSelected((String) buttonView.getTag());
             }
         };
         mRadioAnswer1.setOnCheckedChangeListener(onCheckedChangeListener);
         mRadioAnswer2.setOnCheckedChangeListener(onCheckedChangeListener);
         mRadioAnswer3.setOnCheckedChangeListener(onCheckedChangeListener);
         mRadioAnswer4.setOnCheckedChangeListener(onCheckedChangeListener);
-        return view;
+    }
+
+    public QuizzPresenter getQuizzPresenter(){
+        return mQuizzPresenter;
     }
 
     @Override
