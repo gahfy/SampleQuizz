@@ -3,6 +3,8 @@ package net.gahfy.samplequizz;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -62,5 +64,26 @@ public class QuizzFragmentInstrumentedUnitTest {
         Assert.assertEquals("Check tag of second answer TextView", mQuizzFragment.mRadioAnswer2.getTag(), "Answer2");
         Assert.assertEquals("Check tag of third answer TextView", mQuizzFragment.mRadioAnswer3.getTag(), "Answer3");
         Assert.assertEquals("Check tag of fourth answer TextView", mQuizzFragment.mRadioAnswer4.getTag(), "Answer4");
+    }
+
+    @Test
+    public void fragment_showMessage() throws Exception {
+        String goodMessage = mContext.getString(R.string.message_good_answer);
+        String wrongMessage = mContext.getString(R.string.message_wrong_answer);
+
+        int goodColor = ContextCompat.getColor(mContext, R.color.color_good_answer);
+        int wrongColor = ContextCompat.getColor(mContext, R.color.color_wrong_answer);
+
+        // Test showMessage(true)
+        mQuizzFragment.showMessage(true);
+        Assert.assertEquals("Test visibility after showMessage(true)", mQuizzFragment.mLblResult.getVisibility(), View.VISIBLE);
+        Assert.assertEquals("Test content after showMessage(true)", mQuizzFragment.mLblResult.getText(), goodMessage);
+        Assert.assertEquals("Test color after showMessage(true)", mQuizzFragment.mLblResult.getCurrentTextColor(), goodColor);
+
+        // Test showMessage(false)
+        mQuizzFragment.showMessage(false);
+        Assert.assertEquals("Test visibility after showMessage(false)", mQuizzFragment.mLblResult.getVisibility(), View.VISIBLE);
+        Assert.assertEquals("Test content after showMessage(false)", mQuizzFragment.mLblResult.getText(), wrongMessage);
+        Assert.assertEquals("Test color after showMessage(false)", mQuizzFragment.mLblResult.getCurrentTextColor(), wrongColor);
     }
 }
