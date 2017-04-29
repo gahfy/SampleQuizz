@@ -31,4 +31,11 @@ dependencies {
     /****************** Local tests ******************/
     // JUnit 4 framework
     testCompile 'junit:junit:4.12'
+    /****************** Instrumented tests ******************/
+    // JUnit 4 framework
+    androidTestCompile 'junit:junit:4.12'
+    // Espresso library
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 }
