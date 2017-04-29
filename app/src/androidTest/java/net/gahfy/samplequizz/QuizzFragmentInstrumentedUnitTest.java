@@ -11,7 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Instrumentation test, which will execute on an Android device.
@@ -21,19 +25,26 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class QuizzFragmentInstrumentedUnitTest {
     private QuizzFragment mQuizzFragment;
+    private Context mContext;
 
     @Before
     public void setup(){
-        Context context = InstrumentationRegistry.getTargetContext();
+        mContext = InstrumentationRegistry.getTargetContext();
 
-        mQuizzFragment = new QuizzFragment();
-        mQuizzFragment.mLblQuestion = new TextView(context);
-        mQuizzFragment.mLblResult = new TextView(context);
+        mQuizzFragment = mock(QuizzFragment.class);
 
-        mQuizzFragment.mRadioAnswer1 = new RadioButton(context);
-        mQuizzFragment.mRadioAnswer2 = new RadioButton(context);
-        mQuizzFragment.mRadioAnswer3 = new RadioButton(context);
-        mQuizzFragment.mRadioAnswer4 = new RadioButton(context);
+        mQuizzFragment.mLblQuestion = new TextView(mContext);
+        mQuizzFragment.mLblResult = new TextView(mContext);
+
+        mQuizzFragment.mRadioAnswer1 = new RadioButton(mContext);
+        mQuizzFragment.mRadioAnswer2 = new RadioButton(mContext);
+        mQuizzFragment.mRadioAnswer3 = new RadioButton(mContext);
+        mQuizzFragment.mRadioAnswer4 = new RadioButton(mContext);
+
+        doCallRealMethod().when(mQuizzFragment).showQuestion(anyString(), anyString(), anyString(), anyString(), anyString());
+        doCallRealMethod().when(mQuizzFragment).showMessage(anyBoolean());
+        doCallRealMethod().when(mQuizzFragment).init();
+        when(mQuizzFragment.getContext()).thenReturn(mContext);
     }
 
     @Test
