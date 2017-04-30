@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.hamcrest.Matcher;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class QuizzApplicationAutomaticTest {
+    private static final int GOOD_ANSWER_COLOR = 0xFF007F00;
+    private static final int WRONG_ANWER_COLOR = 0xFFAF0000;
+
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
@@ -47,11 +51,13 @@ public class QuizzApplicationAutomaticTest {
             onView(withId(R.id.lbl_result))
                     .check(matches(withText("Félicitations\u202F!")))
                     .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+            Assert.assertEquals("Checking color of response", getTextColor(withId(R.id.lbl_result)), GOOD_ANSWER_COLOR);
         }
         else{
             onView(withId(R.id.lbl_result))
                     .check(matches(withText("Incorrect\u202F! Essaye encore\u202F!")))
                     .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+            Assert.assertEquals("Checking color of response", getTextColor(withId(R.id.lbl_result)), WRONG_ANWER_COLOR);
         }
     }
 
@@ -75,6 +81,28 @@ public class QuizzApplicationAutomaticTest {
             }
         });
         return stringHolder[0];
+    }
+
+    private int getTextColor(final Matcher<View> matcher) {
+        final int[] colorHolder = { -1 };
+        onView(matcher).perform(new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return isAssignableFrom(TextView.class);
+            }
+
+            @Override
+            public String getDescription() {
+                return "getting text color from a TextView";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                TextView tv = (TextView)view;
+                colorHolder[0] = tv.getCurrentTextColor();
+            }
+        });
+        return colorHolder[0];
     }
 
     /**
