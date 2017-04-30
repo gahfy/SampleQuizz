@@ -6,6 +6,27 @@ import java.util.List;
 import java.util.Random;
 
 public class QuizzPresenter {
+    public static final Question[] QUESTIONS = new Question[]{
+            new Question(
+                    "En quelle année est sortie le premier téléphone sous Android ?",
+                    "2008",
+                    new String[]{
+                            "2006",
+                            "2007",
+                            "2009"
+                    }
+            ),
+            new Question(
+                    "Quelle société développe le système d'exploitation Android ?",
+                    "Google",
+                    new String[]{
+                            "Microsoft",
+                            "IBM",
+                            "Apple"
+                    }
+            )
+    };
+
     private QuizzView mView;
     private Question mQuestion;
 
@@ -25,28 +46,8 @@ public class QuizzPresenter {
     }
 
     private void initQuestion(){
-        Question[] questions = new Question[]{
-                new Question(
-                        "En quelle année est sortie le premier téléphone sous Android ?",
-                        "2008",
-                        new String[]{
-                                "2006",
-                                "2007",
-                                "2009"
-                        }
-                ),
-                new Question(
-                        "Quelle société développe le système d'exploitation Android ?",
-                        "Google",
-                        new String[]{
-                                "Microsoft",
-                                "IBM",
-                                "Apple"
-                        }
-                )
-        };
-        int randId = new Random().nextInt(questions.length);
-        mQuestion = questions[randId];
+        int randId = new Random().nextInt(QUESTIONS.length);
+        mQuestion = QUESTIONS[randId];
     }
 
     private void presentQuestion(){
