@@ -40,7 +40,7 @@ public class QuizzApplicationAutomaticTest {
         checkAnswer(R.id.radio_answer_4, answer);
     }
 
-    private void checkAnswer(int answerId, String goodAnswer){
+    private void checkAnswer(int answerId, String goodAnswer) throws Exception{
         String answerToSelect = getText(withId(answerId));
         onView(withId(answerId)).perform(click());
         if(answerToSelect.equals(goodAnswer)){
