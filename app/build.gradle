@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 25
@@ -12,6 +13,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug{
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -36,4 +40,17 @@ dependencies {
     testCompile 'junit:junit:4.12'
     // Mockito framework
     testCompile 'org.mockito:mockito-core:1.10.19'
+    /****************** Instrumented tests ******************/
+    // JUnit 4 framework
+    androidTestCompile 'junit:junit:4.12'
+    // Espresso library
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    // Mockito framework
+    androidTestCompile 'org.mockito:mockito-android:2.7.15'
+}
+
+jacoco {
+    toolVersion = "0.7.9"
 }
