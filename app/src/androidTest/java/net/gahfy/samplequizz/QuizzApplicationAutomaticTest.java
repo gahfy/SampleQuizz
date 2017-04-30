@@ -44,10 +44,14 @@ public class QuizzApplicationAutomaticTest {
         String answerToSelect = getText(withId(answerId));
         onView(withId(answerId)).perform(click());
         if(answerToSelect.equals(goodAnswer)){
-            onView(withId(R.id.lbl_result)).check(matches(withText("Félicitations\u202F!")));
+            onView(withId(R.id.lbl_result))
+                    .check(matches(withText("Félicitations\u202F!")))
+                    .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         }
         else{
-            onView(withId(R.id.lbl_result)).check(matches(withText("Incorrect\u202F! Essaye encore\u202F!")));
+            onView(withId(R.id.lbl_result))
+                    .check(matches(withText("Incorrect\u202F! Essaye encore\u202F!")))
+                    .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         }
     }
 
